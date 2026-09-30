@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, BookOpen, Calculator, Zap, Sliders, Box, GitBranch, Activity, Radio } from 'lucide-react';
+import { Menu, BookOpen, Calculator, Zap, Sliders, Box, GitBranch, Activity, Radio, FileSpreadsheet } from 'lucide-react';
 import { ModuleId } from '../types';
 
 interface HeaderProps {
@@ -9,14 +9,15 @@ interface HeaderProps {
 }
 
 const moduleNames: Record<ModuleId, { title: string; subtitle: string }> = {
-  theory: { title: 'Módulo 1: Tutor de Teoría y Demostraciones Matemáticas', subtitle: 'KaTeX & Deducciones 1er y 2º Orden' },
-  canonical: { title: 'Módulo 2: Calculadora Canónica y Sistemas 2º Orden', subtitle: '1er Orden & 2º Orden (wn, ζ, Mp, tp, ts)' },
-  circuits: { title: 'Módulo 3: Calculadora de Circuitos Eléctricos', subtitle: 'RC, RL y RLC Serie' },
-  simulator: { title: 'Módulo 4: Simulador Paramétrico y Perturbaciones', subtitle: 'K, τ, Escalón, Rampa & Perturbación' },
-  pid: { title: 'Módulo 5: Laboratorio de Control PID en Lazo Cerrado', subtitle: 'Sintonía Ziegler-Nichols & Métricas' },
-  bode: { title: 'Módulo 6: Analizador de Frecuencia (Diagrama de Bode)', subtitle: 'Magnitud (dB), Fase (°) & Sonda' },
-  blockdiagram: { title: 'Módulo 7: Diagrama de Bloques Interactivo (SVG)', subtitle: 'Lazo Abierto / Cerrado con Feedback' },
-  simulink: { title: 'Módulo 8: Exportador Simulink, MATLAB y Cargador CSV', subtitle: 'Generador .slx, Script .m & Ajuste de Parámetros' },
+  theory: { title: 'Módulo 1: Masterclass Teórica y Álgebra de Laplace', subtitle: 'Explicación en 3 Ejes & Polos/Ceros' },
+  stepbystep: { title: 'Módulo 2: Desglose Algebraico Paso a Paso', subtitle: 'Pizarra Demostrativa en KaTeX (5 Pasos)' },
+  circuits: { title: 'Módulo 3: Calculadora de Circuitos Eléctricos', subtitle: 'RC, RL y RLC Serie con Respuesta Física' },
+  simulator: { title: 'Módulo 4: Simulador Paramétrico y Comportamiento Temporal', subtitle: 'K, τ, ζ, wn, Escalón, Rampa & Perturbaciones' },
+  pid: { title: 'Módulo 5: Laboratorio de Control PID en Lazo Cerrado', subtitle: 'Sintonía Ziegler-Nichols, Esfuerzo u(t) y T(s)' },
+  bode: { title: 'Módulo 6: Analizador en Frecuencia (Diagrama de Bode)', subtitle: 'Magnitud (dB), Fase (°) & Sonda Sinusoidal' },
+  blockdiagram: { title: 'Módulo 7: Visualizador de Diagrama de Bloques SVG', subtitle: 'Lazo Abierto / Cerrado Interactivo Vectorial' },
+  matlab: { title: 'Módulo 8: Exportador de Código MATLAB y Simulink', subtitle: 'Generación Automática .slx y Script .m' },
+  csvloader: { title: 'Módulo 9: Cargador de Datos Experimentales (CSV)', subtitle: 'Identificación de Parámetros K y τ por Regresión' },
 };
 
 export const Header: React.FC<HeaderProps> = ({
@@ -40,16 +41,16 @@ export const Header: React.FC<HeaderProps> = ({
             Platinum Control Lab
           </span>
           <span className="hidden sm:inline-block text-xs text-slate-500 font-mono">
-            Sistemas, Frecuencia & PID
+            9 Módulos Universitarios
           </span>
         </div>
       </div>
 
       {/* Zone 2: Navigation Links (desktop quick navigation) */}
-      <nav className="hidden 2xl:flex items-center gap-4 text-xs font-medium text-slate-400">
+      <nav className="hidden 2xl:flex items-center gap-3 text-xs font-medium text-slate-400">
         <button
           onClick={() => onSelectModule('theory')}
-          className={`transition-colors flex items-center gap-1.5 ${
+          className={`transition-colors flex items-center gap-1 ${
             activeModule === 'theory' ? 'text-cyan-400 font-semibold' : 'hover:text-slate-200'
           }`}
         >
@@ -57,17 +58,17 @@ export const Header: React.FC<HeaderProps> = ({
           <span>Teoría</span>
         </button>
         <button
-          onClick={() => onSelectModule('canonical')}
-          className={`transition-colors flex items-center gap-1.5 ${
-            activeModule === 'canonical' ? 'text-indigo-400 font-semibold' : 'hover:text-slate-200'
+          onClick={() => onSelectModule('stepbystep')}
+          className={`transition-colors flex items-center gap-1 ${
+            activeModule === 'stepbystep' ? 'text-indigo-400 font-semibold' : 'hover:text-slate-200'
           }`}
         >
           <Calculator className="w-3.5 h-3.5" />
-          <span>Canónica</span>
+          <span>Paso a Paso</span>
         </button>
         <button
           onClick={() => onSelectModule('circuits')}
-          className={`transition-colors flex items-center gap-1.5 ${
+          className={`transition-colors flex items-center gap-1 ${
             activeModule === 'circuits' ? 'text-emerald-400 font-semibold' : 'hover:text-slate-200'
           }`}
         >
@@ -76,7 +77,7 @@ export const Header: React.FC<HeaderProps> = ({
         </button>
         <button
           onClick={() => onSelectModule('simulator')}
-          className={`transition-colors flex items-center gap-1.5 ${
+          className={`transition-colors flex items-center gap-1 ${
             activeModule === 'simulator' ? 'text-cyan-400 font-semibold' : 'hover:text-slate-200'
           }`}
         >
@@ -85,16 +86,16 @@ export const Header: React.FC<HeaderProps> = ({
         </button>
         <button
           onClick={() => onSelectModule('pid')}
-          className={`transition-colors flex items-center gap-1.5 ${
+          className={`transition-colors flex items-center gap-1 ${
             activeModule === 'pid' ? 'text-indigo-400 font-semibold' : 'hover:text-slate-200'
           }`}
         >
           <Activity className="w-3.5 h-3.5" />
-          <span>PID Lab</span>
+          <span>PID</span>
         </button>
         <button
           onClick={() => onSelectModule('bode')}
-          className={`transition-colors flex items-center gap-1.5 ${
+          className={`transition-colors flex items-center gap-1 ${
             activeModule === 'bode' ? 'text-amber-400 font-semibold' : 'hover:text-slate-200'
           }`}
         >
@@ -103,7 +104,7 @@ export const Header: React.FC<HeaderProps> = ({
         </button>
         <button
           onClick={() => onSelectModule('blockdiagram')}
-          className={`transition-colors flex items-center gap-1.5 ${
+          className={`transition-colors flex items-center gap-1 ${
             activeModule === 'blockdiagram' ? 'text-sky-400 font-semibold' : 'hover:text-slate-200'
           }`}
         >
@@ -111,13 +112,22 @@ export const Header: React.FC<HeaderProps> = ({
           <span>Bloques</span>
         </button>
         <button
-          onClick={() => onSelectModule('simulink')}
-          className={`transition-colors flex items-center gap-1.5 ${
-            activeModule === 'simulink' ? 'text-emerald-400 font-semibold' : 'hover:text-slate-200'
+          onClick={() => onSelectModule('matlab')}
+          className={`transition-colors flex items-center gap-1 ${
+            activeModule === 'matlab' ? 'text-indigo-400 font-semibold' : 'hover:text-slate-200'
           }`}
         >
           <Box className="w-3.5 h-3.5" />
-          <span>Simulink & CSV</span>
+          <span>Simulink</span>
+        </button>
+        <button
+          onClick={() => onSelectModule('csvloader')}
+          className={`transition-colors flex items-center gap-1 ${
+            activeModule === 'csvloader' ? 'text-emerald-400 font-semibold' : 'hover:text-slate-200'
+          }`}
+        >
+          <FileSpreadsheet className="w-3.5 h-3.5" />
+          <span>CSV</span>
         </button>
       </nav>
 
@@ -125,7 +135,7 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="flex items-center gap-3">
         <div className="text-right">
           <div className="text-xs font-semibold text-white">
-            {moduleNames[activeModule]?.title.split(':')[1] || 'Control Lab'}
+            {moduleNames[activeModule]?.title.split(':')[1] || 'Cátedra de Control'}
           </div>
           <div className="text-[11px] text-slate-400">
             {moduleNames[activeModule]?.subtitle}

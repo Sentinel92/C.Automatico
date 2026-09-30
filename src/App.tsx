@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
 import { TheoryModule } from './components/TheoryModule';
-import { CanonicalCalculatorModule } from './components/CanonicalCalculatorModule';
+import { StepByStepModule } from './components/StepByStepModule';
 import { CircuitCalculatorModule } from './components/CircuitCalculatorModule';
 import { ParametricSimulatorModule } from './components/ParametricSimulatorModule';
 import { PidLabModule } from './components/PidLabModule';
 import { BodeAnalyzerModule } from './components/BodeAnalyzerModule';
 import { BlockDiagramModule } from './components/BlockDiagramModule';
-import { SimulinkGeneratorModule } from './components/SimulinkGeneratorModule';
+import { MatlabSimulinkModule } from './components/MatlabSimulinkModule';
+import { ExperimentalCsvModule } from './components/ExperimentalCsvModule';
 import { ModuleId } from './types';
 import { useLocalStorage } from './hooks/useLocalStorage';
 
@@ -39,13 +40,14 @@ export default function App() {
           {/* Module Viewport */}
           <main className="flex-1 p-4 md:p-6 lg:p-8 max-w-7xl w-full mx-auto overflow-y-auto">
             {activeModule === 'theory' && <TheoryModule />}
-            {activeModule === 'canonical' && <CanonicalCalculatorModule />}
+            {(activeModule === 'stepbystep' || (activeModule as any) === 'canonical') && <StepByStepModule />}
             {activeModule === 'circuits' && <CircuitCalculatorModule />}
             {activeModule === 'simulator' && <ParametricSimulatorModule />}
             {activeModule === 'pid' && <PidLabModule />}
             {activeModule === 'bode' && <BodeAnalyzerModule />}
             {activeModule === 'blockdiagram' && <BlockDiagramModule />}
-            {activeModule === 'simulink' && <SimulinkGeneratorModule />}
+            {(activeModule === 'matlab' || (activeModule as any) === 'simulink') && <MatlabSimulinkModule />}
+            {activeModule === 'csvloader' && <ExperimentalCsvModule />}
           </main>
 
           {/* Minimalist Professional Footer */}
@@ -53,14 +55,14 @@ export default function App() {
             <div className="flex items-center gap-2">
               <span className="text-slate-300 font-semibold">Platinum Control Lab</span>
               <span>—</span>
-              <span>Sistemas de 1er y 2º Orden, Frecuencia Bode, Control PID y Simulink</span>
+              <span>Cátedra de Ingeniería de Control Automático</span>
             </div>
             <div className="flex items-center gap-4 text-[11px] text-slate-400 font-mono">
-              <span>G(s) = K / (τs + 1)</span>
+              <span>9 Módulos Especializados</span>
               <span>·</span>
-              <span>G(s) = ωn² / (s² + 2ζωns + ωn²)</span>
+              <span>KaTeX & Recharts</span>
               <span>·</span>
-              <span>PID & Bode Analyzer</span>
+              <span>Simulink & MATLAB API</span>
             </div>
           </footer>
         </div>

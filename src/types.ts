@@ -1,21 +1,31 @@
 export type ModuleId =
   | 'theory'
-  | 'canonical'
+  | 'stepbystep'
   | 'circuits'
   | 'simulator'
   | 'pid'
   | 'bode'
   | 'blockdiagram'
-  | 'simulink';
+  | 'matlab'
+  | 'csvloader';
 
 export interface CanonicalParams {
   systemOrder: '1st' | '2nd';
-  // 1st order
-  a: number; // Coefficient of y'(t)
-  b: number; // Coefficient of y(t)
-  c: number; // Coefficient of r(t)
+  // 1st order aliases
+  a?: number;
+  b?: number;
+  c?: number;
+  a1: number;
+  a0: number;
+  b0: number;
   A: number; // Step magnitude
-  // 2nd order: a2*y'' + a1*y' + a0*y = c*r OR wn, zeta
+  // 2nd order: a2*y'' + a1_2*y' + a0_2*y = b0_2*r
+  a2: number;
+  a1_2: number;
+  a0_2: number;
+  b0_2: number;
+  // Direct specs mode
+  inputMode: 'diff_eq' | 'parameters';
   wn: number; // Natural frequency (rad/s)
   zeta: number; // Damping ratio
   K2: number; // DC gain for 2nd order
@@ -50,6 +60,9 @@ export interface CircuitStorageState {
 export interface SimulationParams {
   K: number; // Steady-state gain
   tau: number; // Time constant (s)
+  wn: number; // Natural frequency for 2nd order
+  zeta: number; // Damping ratio for 2nd order
+  systemType: '1st' | '2nd';
   A: number; // Step amplitude
   rampSlope: number; // Ramp input slope (default 1)
   t_pert: number; // Disturbance injection time (s)
@@ -77,4 +90,11 @@ export interface BodeParams {
   freqMinExp: number; // 10^(freqMinExp), e.g. -2 -> 0.01 rad/s
   freqMaxExp: number; // 10^(freqMaxExp), e.g. 3 -> 1000 rad/s
   probeFreq: number; // Probe frequency for sinusoidal time response
+}
+
+export interface CsvExperimentData {
+  t: number;
+  u: number;
+  y: number;
+  yModel?: number;
 }

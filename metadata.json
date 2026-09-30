@@ -1,0 +1,6 @@
+{
+  "name": "AutoControl 1st Order & RC/RL Lab",
+  "description": "Plataforma interactiva para enseñanza y cálculo de Sistemas de 1er Orden, Circuitos RC/RL, Diagramas de Bloques y Generación de Modelos Simulink con scripts de MATLAB.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

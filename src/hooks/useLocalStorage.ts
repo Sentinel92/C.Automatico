@@ -1,6 +1,9 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
-export function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T | ((prev: T) => T)) => void, () => void] {
+export function useLocalStorage<T>(
+  key: string,
+  initialValue: T
+): [T, React.Dispatch<React.SetStateAction<T>>, () => void] {
   const [storedValue, setStoredValue] = useState<T>(() => {
     try {
       if (typeof window === 'undefined') {
@@ -24,7 +27,7 @@ export function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T 
     }
   }, [key, storedValue]);
 
-  const resetValue = () => {
+  const resetValue = useCallback(() => {
     try {
       if (typeof window !== 'undefined') {
         window.localStorage.removeItem(key);
@@ -34,7 +37,7 @@ export function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T 
       console.warn(`Error clearing localStorage key "${key}":`, error);
       setStoredValue(initialValue);
     }
-  };
+  }, [key, initialValue]);
 
   return [storedValue, setStoredValue, resetValue];
 }

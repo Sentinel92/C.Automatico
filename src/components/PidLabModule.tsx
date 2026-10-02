@@ -307,6 +307,43 @@ export const PidLabModule: React.FC = () => {
         )}
       </div>
 
+      {/* DEDUCCIÓN SIMBÓLICA EN LAZO CERRADO T(s) */}
+      <div className="rounded-xl border border-slate-800 bg-slate-900 p-5 space-y-3">
+        <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+          <div className="flex items-center gap-2">
+            <span className="w-5 h-5 rounded-full bg-indigo-950 border border-indigo-700 text-indigo-300 font-mono text-xs flex items-center justify-center font-bold">
+              Σ
+            </span>
+            <h3 className="text-sm font-bold text-white uppercase tracking-wider font-mono">
+              Análisis Simbólico Formal de la Función de Transferencia en Lazo Cerrado T(s)
+            </h3>
+          </div>
+          <span className="text-[11px] text-indigo-300 font-mono">
+            T(s) = Y(s) / R(s)
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+          <div className="p-3 rounded-lg bg-slate-950 border border-slate-800 space-y-1">
+            <span className="text-cyan-400 font-bold block">1. Controlador PID en Laplace:</span>
+            <MathView math="C(s) = K_p + \frac{K_i}{s} + K_d s = \frac{K_d s^2 + K_p s + K_i}{s}" display />
+            <span className="text-[10px] text-slate-400">Introduce un polo en el origen (s=0) para eliminar ess.</span>
+          </div>
+
+          <div className="p-3 rounded-lg bg-slate-950 border border-slate-800 space-y-1">
+            <span className="text-amber-400 font-bold block">2. Planta en Lazo Abierto:</span>
+            <MathView math="G(s) = \frac{K}{\tau s + 1}" display />
+            <span className="text-[10px] text-slate-400">Ganancia K y constante de inercia tau.</span>
+          </div>
+
+          <div className="p-3 rounded-lg bg-slate-950 border border-slate-800 space-y-1">
+            <span className="text-emerald-400 font-bold block">3. Lazo Cerrado con Realimentación:</span>
+            <MathView math="T(s) = \frac{C(s)G(s)}{1 + C(s)G(s)H(s)} \quad (H=1)" display />
+            <span className="text-[10px] text-slate-400">Polinomio de 2º orden: (tau + K·Kd)s² + (1 + K·Kp)s + K·Ki</span>
+          </div>
+        </div>
+      </div>
+
       {/* Main Grid: Parameters & Interactive Response */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Column: Sliders */}

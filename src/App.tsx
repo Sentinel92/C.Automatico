@@ -1,24 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
+import { FundamentalsModule } from './components/FundamentalsModule';
+import { LaplaceBridgeModule } from './components/LaplaceBridgeModule';
 import { FirstOrderDelayModule } from './components/FirstOrderDelayModule';
 import { SecondOrderExamModule } from './components/SecondOrderExamModule';
 import { CircuitsCombinedModule } from './components/CircuitsCombinedModule';
 import { StepByStepModule } from './components/StepByStepModule';
 import { PidLabModule } from './components/PidLabModule';
 import { BodeAnalyzerModule } from './components/BodeAnalyzerModule';
-import { MatlabCsvModule } from './components/MatlabCsvModule';
-import { GlossaryQuizModule } from './components/GlossaryQuizModule';
+import { BlockSimulinkModule } from './components/BlockSimulinkModule';
+import { CsvGlossaryExamCombinedModule } from './components/CsvGlossaryExamCombinedModule';
+import { SymbolicTheoryModule } from './components/SymbolicTheoryModule';
+import { NumericBlackboardModule } from './components/NumericBlackboardModule';
+import { MatlabSymbolicModule } from './components/MatlabSymbolicModule';
 import { ShareSessionModal } from './components/ShareSessionModal';
 import { ModuleId } from './types';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import { checkUrlForSession, applySessionState } from './utils/sessionShare';
-import { CheckCircle2, X, Sparkles } from 'lucide-react';
+import { CheckCircle2, X } from 'lucide-react';
 
 export default function App() {
   const [activeModule, setActiveModule] = useLocalStorage<ModuleId>(
     'autocontrol_platinum_active_module',
-    'first_order_delay'
+    'mod01_fundamentals'
   );
   const [isOpenMobile, setIsOpenMobile] = useState<boolean>(false);
   const [isShareModalOpen, setIsShareModalOpen] = useState<boolean>(false);
@@ -65,7 +70,7 @@ export default function App() {
               <div className="flex items-center gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
                 <span>
-                  <strong>¡Sesión de Laboratorio compartida cargada con éxito!</strong> Los parámetros y gráficas del compañero han sido sincronizados en tu entorno.
+                  <strong>¡Sesión de Laboratorio compartida cargada con éxito!</strong> Los parámetros y configuraciones del compañero han sido sincronizados en tu sesión.
                 </span>
               </div>
               <button
@@ -80,41 +85,64 @@ export default function App() {
 
           {/* Module Viewport */}
           <main className="flex-1 p-4 md:p-6 lg:p-8 max-w-7xl w-full mx-auto overflow-y-auto">
-            {(activeModule === 'first_order_delay' ||
-              activeModule === 'fundamentals' ||
-              activeModule === 'theory' ||
-              activeModule === 'circuit_tutor') && <FirstOrderDelayModule />}
+            {/* MÓDULO 01 */}
+            {(activeModule === 'mod01_fundamentals' ||
+              activeModule === 'fundamentals') && <FundamentalsModule />}
 
-            {(activeModule === 'second_order_exam' ||
-              activeModule === 'systems_analysis' ||
-              activeModule === 'simulator') && <SecondOrderExamModule />}
+            {/* MÓDULO 02 */}
+            {(activeModule === 'mod02_laplace_bridge' ||
+              activeModule === 'laplace_bridge') && <LaplaceBridgeModule />}
 
-            {(activeModule === 'circuits' ||
-              activeModule === 'circuit_blackboard') && <CircuitsCombinedModule />}
+            {/* MÓDULO 03 */}
+            {(activeModule === 'mod03_first_order_delay' ||
+              activeModule === 'first_order_delay') && <FirstOrderDelayModule />}
 
-            {(activeModule === 'algebraic_tutor' ||
+            {/* MÓDULO 04 */}
+            {(activeModule === 'mod04_second_order_exam' ||
+              activeModule === 'second_order_exam' ||
+              activeModule === 'systems_analysis') && <SecondOrderExamModule />}
+
+            {/* MÓDULO 05 */}
+            {(activeModule === 'mod05_circuits' ||
+              activeModule === 'circuits' ||
+              activeModule === 'circuit_blackboard' ||
+              activeModule === 'circuit_tutor') && <CircuitsCombinedModule />}
+
+            {/* MÓDULO 06 */}
+            {(activeModule === 'mod06_laplace_tutor' ||
+              activeModule === 'algebraic_tutor' ||
               activeModule === 'stepbystep' ||
-              activeModule === 'canonical' ||
-              activeModule === 'laplace_bridge') && <StepByStepModule />}
+              activeModule === 'canonical') && <StepByStepModule />}
 
-            {(activeModule === 'pid_lab' || activeModule === 'pid') && (
-              <PidLabModule />
-            )}
+            {/* MÓDULO 07 */}
+            {(activeModule === 'mod07_pid_lab' ||
+              activeModule === 'pid_lab' ||
+              activeModule === 'pid') && <PidLabModule />}
 
-            {(activeModule === 'bode_analysis' || activeModule === 'bode') && (
-              <BodeAnalyzerModule />
-            )}
+            {/* MÓDULO 08 */}
+            {(activeModule === 'mod08_bode' ||
+              activeModule === 'bode_analysis' ||
+              activeModule === 'bode') && <BodeAnalyzerModule />}
 
-            {(activeModule === 'matlab_csv' ||
+            {/* MÓDULO 09 */}
+            {(activeModule === 'mod09_block_simulink' ||
               activeModule === 'block_simulink' ||
               activeModule === 'blockdiagram' ||
               activeModule === 'matlab' ||
-              activeModule === 'simulink' ||
-              activeModule === 'csv_lab' ||
-              activeModule === 'csvloader') && <MatlabCsvModule />}
+              activeModule === 'simulink') && <BlockSimulinkModule />}
 
-            {(activeModule === 'glossary_quiz' ||
-              activeModule === 'glossary_exam') && <GlossaryQuizModule />}
+            {/* MÓDULO 10 */}
+            {(activeModule === 'mod10_csv_glossary_exam' ||
+              activeModule === 'matlab_csv' ||
+              activeModule === 'csv_lab' ||
+              activeModule === 'csvloader' ||
+              activeModule === 'glossary_quiz' ||
+              activeModule === 'glossary_exam') && <CsvGlossaryExamCombinedModule />}
+
+            {/* Extra Academic Tools */}
+            {activeModule === 'symbolic_theory' && <SymbolicTheoryModule />}
+            {activeModule === 'numeric_blackboard' && <NumericBlackboardModule />}
+            {activeModule === 'matlab_symbolic' && <MatlabSymbolicModule />}
           </main>
 
           {/* Minimalist Professional Footer */}
@@ -124,18 +152,30 @@ export default function App() {
                 Platinum Control Lab
               </span>
               <span>—</span>
-              <span>Edición Cuaderno Universitario & Sesiones Colaborativas</span>
+              <span>Edición Completa Cátedra & Cuaderno (10 Módulos)</span>
             </div>
             <div className="flex items-center gap-4 text-[11px] text-slate-400 font-mono">
-              <span>FOPTD (K, τ, θ)</span>
+              <span>10 Módulos Académicos</span>
               <span>·</span>
-              <span>2º Orden (wn, ζ, Mp%)</span>
+              <span>Lazo Abierto/Cerrado</span>
               <span>·</span>
-              <span>PID & Bode</span>
+              <span>Plano s</span>
               <span>·</span>
-              <span>Quiz 10 Preguntas</span>
+              <span>FOPTD</span>
               <span>·</span>
-              <span>Share URL</span>
+              <span>2º Orden</span>
+              <span>·</span>
+              <span>RC/RL/RLC</span>
+              <span>·</span>
+              <span>Laplace</span>
+              <span>·</span>
+              <span>PID</span>
+              <span>·</span>
+              <span>Bode</span>
+              <span>·</span>
+              <span>Simulink</span>
+              <span>·</span>
+              <span>CSV & Quiz</span>
             </div>
           </footer>
         </div>

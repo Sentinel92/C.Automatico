@@ -26,13 +26,31 @@ export const BlockSimulinkModule: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'svg' | 'script'>('svg');
   const [copied, setCopied] = useState<boolean>(false);
 
-  // Script generator for Simulink API
+  // Script generator for Simulink API & Symbolic MATLAB
   const simulinkCode = useMemo(() => {
     return `%% =========================================================================
-%% AUTOCONTROL PLATINUM LAB: CONSTRUCCIÓN PROGRAMÁTICA DE SIMULINK (.SLX)
+%% AUTOCONTROL PLATINUM LAB: ÁLGEBRA SIMBÓLICA Y CONSTRUCCIÓN DE SIMULINK (.SLX)
 %% =========================================================================
 
 clear; clc; close all;
+
+%% 1. ÁLGEBRA SIMBÓLICA CON 'syms' (CÁLCULO CON LETRAS)
+syms s t positive;
+syms K_s tau_s Kp_s Ki_s Kd_s A_s real;
+
+% Definición simbólica de planta y controlador PID
+G_sym = K_s / (tau_s*s + 1);
+C_sym = Kp_s + Ki_s/s + Kd_s*s;
+T_sym = (C_sym * G_sym) / (1 + C_sym * G_sym);
+
+fprintf('--- FUNCIÓN DE TRANSFERENCIA EN LAZO CERRADO SIMBÓLICA T(s) ---\\n');
+pretty(T_sym);
+
+fprintf('\\n--- RESPUESTA TEMPORAL EXACTA ilaplace((A/s)*T(s)) ---\\n');
+y_sym = ilaplace((A_s/s) * T_sym, s, t);
+pretty(y_sym);
+
+%% 2. CONSTRUCCIÓN PROGRAMÁTICA DEL MODELO EN SIMULINK (.SLX)
 model_name = 'modelo_autocontrol_platinum';
 
 if bdIsLoaded(model_name)
@@ -42,7 +60,7 @@ end
 new_system(model_name);
 open_system(model_name);
 
-% Parámetros de la Planta y Controlador
+% Parámetros Numéricos de la Planta y Controlador
 K = ${K.toFixed(3)};
 tau = ${tau.toFixed(3)};
 Kp = ${Kp.toFixed(3)};
@@ -86,10 +104,9 @@ add_line(model_name, 'Perturbacion/1', 'Sum_Out/1');
 add_line(model_name, 'Sum_Out/1', 'Scope_Out/1');
 add_line(model_name, 'Sum_Out/1', 'Sum_Error/2', 'autorouting', 'on');
 
+save_system(model_name);
 set_param(model_name, 'StopTime', '15.0');
-fprintf('--> Simulando en Simulink...\\n');
-sim(model_name);
-fprintf('--> Modelo construido y simulado con éxito.\\n');
+fprintf('--> Modelo Simulink "%s.slx" creado y guardado con éxito.\\n', model_name);
 `;
   }, [K, tau, Kp, Ki, Kd, A, tPert, ampPert]);
 

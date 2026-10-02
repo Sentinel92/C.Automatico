@@ -21,36 +21,89 @@ interface HeaderProps {
 }
 
 const moduleNames: Record<string, { title: string; subtitle: string }> = {
+  mod01_fundamentals: {
+    title: 'Módulo 01: Fundamentos y Conceptos de Control (Teoría desde Cero)',
+    subtitle: 'Variables u(t), y(t), x(t), d(t) y Comparador Lazo Abierto vs. Lazo Cerrado con Error e(t)',
+  },
+  mod02_laplace_bridge: {
+    title: 'Módulo 02: El Puente a Laplace y el Plano Complejo s (Visualizador de Polos)',
+    subtitle: 'Por qué pasamos del tiempo t al plano s (σ + jω) y relación con la estabilidad y oscilación',
+  },
+  mod03_first_order_delay: {
+    title: 'Módulo 03: Sistemas de 1er Orden y Retardo Puro (Tiempo Muerto)',
+    subtitle: 'Modelo FOPTD G(s) = (K/(τs+1))·e^(-θs), Tabla 1τ a 5τ e Identificación Gráfica',
+  },
+  mod04_second_order_exam: {
+    title: 'Módulo 04: Sistemas de 2º Orden y Fórmulas de Examen (Desarrollo en Letras)',
+    subtitle: 'wn, ζ, wd, β, tr, tp, Mp%, ts(2%) y ts(5%) con Deducción Paso a Paso y Verificación',
+  },
+  mod05_circuits: {
+    title: 'Módulo 05: Deducción de Circuitos Eléctricos (RC, RL, RLC)',
+    subtitle: 'Leyes de Kirchhoff (LVK), Impedancias de Laplace Z(s) y Función de Transferencia V_out/V_in',
+  },
+  mod06_laplace_tutor: {
+    title: 'Módulo 06: Tutor de Laplace y Fracciones Parciales',
+    subtitle: 'EDOs de 1er y 2º Orden, Transformada Término a Término, Residuos C1, C2, C3 y Solución y(t)',
+  },
+  mod07_pid_lab: {
+    title: 'Módulo 07: Laboratorio de Control PID en Lazo Cerrado',
+    subtitle: 'Simulación PID: C(s) = Kp + Ki/s + Kd·s, Deducción T(s) = C·G/(1+C·G) y Ziegler-Nichols',
+  },
+  mod08_bode: {
+    title: 'Módulo 08: Respuesta en Frecuencia (Diagramas de Bode)',
+    subtitle: 'Gráfica Semilogarítmica de Magnitud (dB) y Fase (grados), Frecuencia de Corte y Márgenes',
+  },
+  mod09_block_simulink: {
+    title: 'Módulo 09: Diagrama de Bloques SVG, MATLAB & Simulink (.m)',
+    subtitle: 'Esquema Gráfico Vectorial Interactivo y Generador de Script .m con syms y Simulink (.slx)',
+  },
+  mod10_csv_glossary_exam: {
+    title: 'Módulo 10: Modo Examen Oficial (60 min), CSV y Glosario',
+    subtitle: 'Certamen Universitario con Fórmulas Bloqueadas, Temporizador de 60 Minutos y Calificación Automática',
+  },
+  // Compatibility aliases
+  symbolic_theory: {
+    title: 'Módulo 1: Teoría y Deducción Simbólica Completa (Solo Letras)',
+    subtitle: 'Sistemas LTI, Laplace, EDOs 1er y 2º Orden, Fórmulas de Examen y Leyes de Kirchhoff',
+  },
+  numeric_blackboard: {
+    title: 'Módulo 2: Pizarra de Cálculo y Evaluación Numérica (4 Pasos)',
+    subtitle: 'Fórmula Simbólica -> Entrada Numérica -> Sustitución en KaTeX -> Gráfica con tp, ts y Mp',
+  },
+  matlab_symbolic: {
+    title: 'Módulo 3: Generador de Script MATLAB Simbólico y Numérico',
+    subtitle: 'Álgebra Simbólica con syms, ilaplace, pretty y Creación Automatizada de Simulink (.slx)',
+  },
+  pid_lab: {
+    title: 'Módulo 07: Laboratorio de Control PID en Lazo Cerrado',
+    subtitle: 'Análisis Simbólico T(s) = C(s)G(s)/(1+C(s)G(s)), Ziegler-Nichols y Análisis de Error ess',
+  },
+  bode_analysis: {
+    title: 'Módulo 08: Analizador de Frecuencia y Diagrama de Bode',
+    subtitle: 'Diagrama Semilogarítmico de Magnitud (dB) y Fase (grados), Frecuencia de Corte wc y Resonancia wn',
+  },
   first_order_delay: {
-    title: 'Módulo 1: Sistemas de 1er Orden y Retardo Puro (Tiempo Muerto)',
+    title: 'Módulo 03: Sistemas de 1er Orden y Retardo Puro (Tiempo Muerto)',
     subtitle: 'Modelo FOPTD G(s) = (K/(τs+1))·e^(-θs), Tabla 1τ a 5τ e Identificación Gráfica',
   },
   second_order_exam: {
-    title: 'Módulo 2: Sistemas de 2º Orden y Fórmulas Exactas de Examen',
+    title: 'Módulo 04: Sistemas de 2º Orden y Fórmulas Exactas de Examen',
     subtitle: 'Cálculo de wn, ζ, wd, β, tr, tp, Mp%, ts(2%) y ts(5%) con Resolución Paso a Paso',
   },
   circuits: {
-    title: 'Módulo 3: Deducción de Circuitos Eléctricos (RC, RL, RLC)',
+    title: 'Módulo 05: Deducción de Circuitos Eléctricos (RC, RL, RLC)',
     subtitle: 'Leyes de Kirchhoff (LVK), Impedancias de Laplace Z(s) y Simulación V e I',
   },
   algebraic_tutor: {
-    title: 'Módulo 4: Calculadora y Tutor de Laplace Paso a Paso',
+    title: 'Módulo 06: Calculadora y Tutor de Laplace Paso a Paso',
     subtitle: 'Transformada Término a Término, Fracciones Parciales en KaTeX y Solución Temporal y(t)',
   },
-  pid_lab: {
-    title: 'Módulo 5: Laboratorio de Control PID en Lazo Cerrado',
-    subtitle: 'Simulación Kp, Ki, Kd, Sintonía Ziegler-Nichols y Análisis de Error ess',
-  },
-  bode_analysis: {
-    title: 'Módulo 6: Analizador de Bode y Frecuencia',
-    subtitle: 'Curvas Semilogarítmicas de Magnitud (dB) y Fase (grados), Frecuencia de Corte y Resonancia',
-  },
   matlab_csv: {
-    title: 'Módulo 7: Exportador MATLAB, Simulink y Identificador CSV',
+    title: 'Módulo 09/10: Exportador MATLAB, Simulink y Identificador CSV',
     subtitle: 'Script .m Automático para .slx y Cargador CSV para Estimación de K, τ y θ',
   },
   glossary_quiz: {
-    title: 'Módulo 8: Glosario y Autoevaluación de Cátedra',
+    title: 'Módulo 10: Glosario y Autoevaluación de Cátedra',
     subtitle: 'Cuestionario Dinámico de 10 Preguntas y Diccionario de Control',
   },
   // Compatibility aliases
